@@ -73,14 +73,15 @@ if __name__=="__main__":
     #Clause 3: "non-repetition": if a number is already in a hole it cannot be selected again for another hole. (if you want to allow repeated numbers, one trick is to create a dictionary and temporarily use a "unique" number)
     #For each hole, if one input is true then the same input must be false in other holes
     clause3=[]
-    for j in range(len(z3vars[0])):
+    for j in range(len(z3vars[0])): #len of an h list since they're all similar length
         #get "and" bools
-        temp_ands=[]
-        for i in range(len(z3vars)):
-            temp_ands.append(z3vars[i][j])
+        for i in range(len(z3vars)-1): #double pointer, one that iterates till end of the list while one is stationary for each iteration
+            for counter in range(i+1, len(z3vars)):
+                clause3.append(z3.Not(z3.And(z3vars[i][j], z3vars[counter][j])))
+            # temp_ands.append(z3vars[i][j])
 
         #add "and" bools in equaions
-        clause3.append(z3.Not(z3.And(temp_ands))) #PROBLEM here, adds 3 ands but must add 2 ands for each like in previous clause (use counter)
+        # clause3.append(z3.Not(z3.And(temp_ands))) #PROBLEM here, adds 3 ands but must add 2 ands for each like in previous clause (use counter)
 
     print(clause3)
     mysolver.add(clause3)
