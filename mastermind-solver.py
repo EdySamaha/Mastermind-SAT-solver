@@ -62,9 +62,27 @@ def clause_Only_one_num_per_hole(z3vars):
 def rule_OneCorrect_WrongPlace(input_string):
     user_input_list = list(input_string)
     print(user_input_list)
-    pass
+    rule=[]
+    for i in range(len(user_input_list)):
+        pass
+    return rule
+
 def rule_OneCorrect_RightPlace(input_string):
-    pass
+    user_input_list = list(input_string)
+    print(user_input_list)
+    bigor=[]
+    for i in range(len(user_input_list)): #turtle rabbit pointers
+        bigand=[]
+        for j in range(len(user_input_list)):
+            #PROBLEM here: not outing the numbers in different positions
+            if i==j:
+                bigand.append(z3.Bool(str(i)+str(user_input_list[j])))
+            else:
+                bigand.append(z3.Not(z3.Bool(str(i)+str(user_input_list[j]))))
+        bigor.append(z3.And(bigand))
+    rule=z3.Or(bigor)
+    return rule
+
 def rule_TwoCorrect_WrongPlace(input_string):
     pass
 def rule_TwoCorrect_RightPlace(input_string):
@@ -132,10 +150,7 @@ if __name__=="__main__":
     #endregion
 
     #region Rules
-    rule= find_other_than('210') #rule_NothingCorrect('111')
-    print(rule)
-    mysolver.add(rule)
-    rule= find_other_than('021') #rule_NothingCorrect('111')
+    rule= rule_OneCorrect_RightPlace('210') #rule_NothingCorrect('111')
     print(rule)
     mysolver.add(rule)
     #endregion
