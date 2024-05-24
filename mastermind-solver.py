@@ -1,5 +1,7 @@
 import z3
 
+#TODO: create a class coz a lot of functions depend on z3vars, solver
+
 #region Z3-specific funtions
 def createZ3Vars(input_list, num_holes):
     z3vars=[] #2D list of holes and possibilities for each hole
@@ -67,8 +69,23 @@ def rule_TwoCorrect_WrongPlace(input_string):
     pass
 def rule_TwoCorrect_RightPlace(input_string):
     pass
-def rule_NothingCorrect(input_string):
-    pass
+
+def rule_NothingCorrect(input_string): #numbers are NOT in Any hole
+    user_input_list = list(input_string)
+    print(user_input_list)
+    rule=[]
+    for c in user_input_list:
+        for h in range(len(input_list)): #not number c in any hole h
+            rule.append(z3.Not(z3.Bool(str(h)+str(c))))
+    return rule
+
+def find_other_than(input_string): #find sequence other than the one inputted
+    user_input_list = list(input_string)
+    print(user_input_list)
+    rule=[]
+    for i in range(len(user_input_list)):
+        rule.append(z3.Not(z3.Bool(str(i)+str(user_input_list[i]))))
+    return rule
 #endregion
 #endregion
 
@@ -112,7 +129,17 @@ if __name__=="__main__":
     clause3=clause_Only_one_num_per_hole(z3vars)
     print(clause3)
     mysolver.add(clause3)
+    #endregion
 
-    #Check solution
+    #region Rules
+    rule= find_other_than('210') #rule_NothingCorrect('111')
+    print(rule)
+    mysolver.add(rule)
+    rule= find_other_than('021') #rule_NothingCorrect('111')
+    print(rule)
+    mysolver.add(rule)
+    #endregion
+
+    # #Check solution
     Checksat(mysolver, z3vars)
     #endregion
