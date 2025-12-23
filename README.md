@@ -1,5 +1,9 @@
-# Mastermind Solver using Z3 in Python
+# Mastermind Game, and Solver using Z3 in Python
 
+## To play the Game
+Run `python Mastermind-game.py` in a terminal in the same directory as the file.
+
+## For the Solver (Unfinished)
 Using Z3 library to find a solution to a set of constraints given in a game of mastermind. 
 Leveraging the pigeon-hole principle.
 
