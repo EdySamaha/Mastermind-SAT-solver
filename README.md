@@ -109,6 +109,14 @@ Cross-checks `score` on every guess/secret pair for several small boards
 (~130k pairs), then plays 300 random games each on `(5,6)`, `(5,5)`, and `(4,8)`,
 asserting every game is solved and the recovered sequence equals the secret.
 
+## Also in this repo: a Sudoku solver
+
+The same boolean-grid + Z3 technique extends naturally to Sudoku — `var(r,c,d)`
+("cell (r,c) holds digit d") in place of `var(position,color)`. `sudoku_solver.py`
+**solves** any given puzzle (and can prove its solution is unique) and
+**generates** new puzzles with a guaranteed-unique solution. See
+[SUDOKU.md](SUDOKU.md).
+
 ## Documentation
 
 - [Z3 for Python](https://ericpony.github.io/z3py-tutorial/guide-examples.htm)
